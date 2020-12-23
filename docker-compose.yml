@@ -15,6 +15,7 @@ services:
     web:
         container_name: expense_api
         build: .
+        image: mershab99/expense_logger
         command: python src/manage.py runserver 0.0.0.0:8000
         tty: true
         volumes:

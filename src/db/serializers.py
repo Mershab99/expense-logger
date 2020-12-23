@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import User, Location
+from .models import User, Transaction
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,22 +8,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class LocationSerializer(serializers.ModelSerializer):
+class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Location
+        model = Transaction
         fields = '__all__'
 
-
-class UserCardSerializer(serializers.ModelSerializer):
-    user_location = LocationSerializer(many=True)
-
-    def create(self, validated_data):
-        locations = validated_data.pop('user_location')
-        user = User.objects.create(**validated_data)
-        for location in locations:
-            Location.objects.create(userID=user, **location)
-        return user
+class ReportSerializer(serializers.ModelSerializer):
+    transactions = TransactionSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('user_location', 'name', 'password')
+        fields = ['name', 'transactions']

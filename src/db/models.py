@@ -1,18 +1,18 @@
 from django.db import models
 
 
-# Create your models here.
+
 class User(models.Model):
     name = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-    picture = models.ImageField(blank=False, null=False)
 
     def __str__(self):
         return self.name
 
 
-class Location(models.Model):
-    locationID = models.AutoField(primary_key=True)
-    userID = models.ForeignKey(User, on_delete= models.CASCADE, related_name='user_location', blank=True)
-    lat = models.DecimalField(decimal_places=7, max_digits=15)
-    lng = models.DecimalField(decimal_places=7, max_digits=15)
+class Transaction(models.Model):
+
+    user = models.ForeignKey(User, related_name='transactions', on_delete=models.CASCADE, blank=True)
+    transaction_type = models.CharField(max_length=50)
+    amount = models.DecimalField(decimal_places=2, max_digits=10)
+    description = models.CharField(max_length=200, blank=True)
+    date_time = models.DateTimeField(auto_now_add=True, blank=True)
