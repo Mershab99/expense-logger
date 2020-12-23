@@ -1,7 +1,8 @@
-version: "3.9"
+version: "3.8"
 
 services:
     db:
+        container_name: expense_db
         image: postgres
         ports:
             - "5432:5432"
@@ -9,12 +10,16 @@ services:
             - POSTGRES_DB=expense_db
             - POSTGRES_USER=admin
             - POSTGRES_PASSWORD=pass
+        volumes:
+            - /data/:/data/db/
     web:
+        container_name: expense_api
         build: .
+        command: python src/manage.py runserver 0.0.0.0:8000
         tty: true
         volumes:
             - .:/code
         ports:
-            - "80:80"
+            - "8000:8000"
         depends_on:
             - db

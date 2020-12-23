@@ -1,15 +1,10 @@
-FROM python:3.9
+FROM python:3.8
+
 ENV PYTHONBUFFERED=1
 
-RUN pip install flask flask_restful flask-cors flask-sqlalchemy flask-migrate psycopg2-binary
-
 RUN mkdir /code
+WORKDIR /code
 ADD . /code/
-WORKDIR /code/
 
-
-EXPOSE 80
-
-ENTRYPOINT ["python"]
-CMD ["./run.py"]
-
+RUN pip install -r requirements.txt
+EXPOSE 8000 5432
