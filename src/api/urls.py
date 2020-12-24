@@ -10,6 +10,7 @@ urlpatterns = [
     path('user-update/<int:pk>/', views.user_update, name='user-update'),
     path('user-delete/<int:pk>/', views.user_delete, name='user-delete'),
 
+    path('transaction-list/', views.transaction_list, name='transaction-list'),
     path('transaction-add/', views.transaction_add, name='transaction-add'),
     path('report/<str:name>', views.get_report, name='report')
 ]

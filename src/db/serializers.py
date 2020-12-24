@@ -9,9 +9,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Transaction
         fields = '__all__'
+
 
 class ReportSerializer(serializers.ModelSerializer):
     transactions = TransactionSerializer(many=True)

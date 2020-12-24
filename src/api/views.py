@@ -15,6 +15,11 @@ def api_overview(request):
         'Create': '/user-create/',
         'Modify': '/user-update/<int:pk>/',
         'Delete': '/user-delete/<int:pk>/',
+
+        'Transaction List': '/transaction-list/',
+        'Transaction Add': '/transaction-add/<id:pk>',
+
+        'Report': '/report/<str:name>'
     }
     return Response(api_urls)
 
@@ -60,6 +65,12 @@ def user_delete(request, pk):
 
     return Response('User succesfully deleted!')
 
+
+@api_view(['GET'])
+def transaction_list(request):
+    transactions = Transaction.objects.all()
+    serializer = TransactionSerializer(transactions,many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def transaction_add(request):
